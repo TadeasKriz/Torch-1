@@ -85,7 +85,6 @@ public struct Utils {
     }
     
     public static func updateManagedValue<T: PropertyValueType, V: ValueTypeWrapper>(_ managedValue: inout List<V>, _ value: [T]) where V.ValueType == T {
-        managedValue.first?.realm?.delete(managedValue)
         managedValue.removeAll()
         value.map {
             let wrapper = V()
@@ -96,13 +95,12 @@ public struct Utils {
     
     public static func updateManagedValue<T: PropertyValueTypeConvertible, V: ValueTypeWrapper>
         (_ managedValue: inout List<V>, _ value: [T]) where V.ValueType == T.ValueType {
-        managedValue.first?.realm?.delete(managedValue)
         managedValue.removeAll()
         value.map {
             let wrapper = V()
             wrapper.value = $0.toValue()
             return wrapper
-            }.forEach { managedValue.append($0) }
+        }.forEach { managedValue.append($0) }
     }
     
     public static func updateManagedValue<T: TorchEntity>(_ managedValue: inout T.ManagedObjectType?, _ value: inout T?, _ database: Database) {

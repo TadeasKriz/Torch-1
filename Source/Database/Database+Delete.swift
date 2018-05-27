@@ -11,6 +11,12 @@ import Foundation
 extension Database {
 
     @discardableResult
+    public func deleteAll() -> Database {
+        realm.deleteAll()
+        return self
+    }
+
+    @discardableResult
     public func delete<T: TorchEntity>(_ entities: T...) -> Database {
         return delete(entities)
     }
