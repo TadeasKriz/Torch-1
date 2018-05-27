@@ -12,7 +12,9 @@ extension Database {
 
     @discardableResult
     public func deleteAll() -> Database {
-        realm.deleteAll()
+        ensureTransaction {
+            realm.deleteAll()
+        }
         return self
     }
 
